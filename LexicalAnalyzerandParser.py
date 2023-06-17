@@ -1,4 +1,6 @@
-GoLangForSyntax = "for i := 1 ; i < 5 ; i ++ { a = b + c }"  # Meminta input dari pengguna
+GoLangForSyntax ='''for i := 1 ; i < 5 ; i ++ { 
+                        a = b + c 
+                    }'''  # Meminta input dari pengguna
 GoLangForSyntax = GoLangForSyntax.split()  # Memecah input menjadi daftar kata
 
 vars = {"a", "b", "c", "d", "e", "f", "g", "h", "i"}  # Set variabel yang valid
