@@ -1,0 +1,58 @@
+import re
+
+# Token types
+TOKEN_INTEGER = 'INTEGER'
+TOKEN_FLOAT = 'FLOAT'
+TOKEN_IDENTIFIER = 'IDENTIFIER'
+TOKEN_OPERATOR = 'OPERATOR'
+TOKEN_KEYWORD = 'KEYWORD'
+TOKEN_SEPARATOR = 'SEPARATOR'
+
+# Regular expressions for token matching
+REGEX_INTEGER = r'\d+'
+REGEX_FLOAT = r'\d+\.\d+'
+REGEX_IDENTIFIER = r'[a-zA-Z_]\w*'
+REGEX_OPERATOR = r'[+\-*/]'
+REGEX_KEYWORD = r'(if|else|while|for|print)'
+REGEX_SEPARATOR = r'[();]'
+
+# Token definition
+TOKENS = [
+    (TOKEN_INTEGER, REGEX_INTEGER),
+    (TOKEN_FLOAT, REGEX_FLOAT),
+    (TOKEN_IDENTIFIER, REGEX_IDENTIFIER),
+    (TOKEN_OPERATOR, REGEX_OPERATOR),
+    (TOKEN_KEYWORD, REGEX_KEYWORD),
+    (TOKEN_SEPARATOR, REGEX_SEPARATOR),
+]
+
+# Lexical analyzer function
+def lexical_analyzer(input_string):
+    tokens = []
+    position = 0
+
+    while position < len(input_string):
+        match = None
+
+        for token_type, regex_pattern in TOKENS:
+            pattern = re.compile(regex_pattern)
+            match = pattern.match(input_string, position)
+
+            if match:
+                value = match.group(0)
+                token = (token_type, value)
+                tokens.append(token)
+                position = match.end(0)
+                break
+
+        if not match:
+            position += 1
+
+    return tokens
+
+# Example usage
+input_string = 'if (x > 5) { print(x); } else { print("Invalid"); }'
+tokens = lexical_analyzer(input_string)
+
+for token_type, value in tokens:
+    print(f'Token: {value}\tType: {token_type}')
